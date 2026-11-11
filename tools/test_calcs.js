@@ -127,7 +127,7 @@ console.log('entries computing with default values:', entries, '/', DATA.ents.le
   }));
   for (let t = 51; t <= 115; t++) if (t !== 109 && t !== 110 && !linked.has(t)) { b++; console.log('SP ORPHAN', t); }
   if (!linked.has(126) || !CALCS[126] || !CALCS[126].name) { b++; console.log('CT/VT MERGE MISSING'); }
-  console.log('تخصصی معتبر و لینک‌شده:', count + 1, '/ 64، خطا:', b);
+  console.log('تخصصی معتبر و لینک‌شده:', count + 1, '/ 64 قدیمی، خطا:', b);
   if (count !== 63 || b) throw new Error('specialist coverage failure');
 }
 
@@ -145,3 +145,25 @@ console.log('entries computing with default values:', entries, '/', DATA.ents.le
  eq(run(97, 'ac3', { Vin: 12, Vo: 48, Io: 2, eta: 90 })[0][1], 0.75);
  eq(run(104, 'ac3', { Q: 2, H: 50, eta: 100, rho: 1000 })[1][1], 1000 * 9.80665 * 2 * 50 / 1000);
  eq(run(111, 'ac3', { N: 10000, Ni: 2500, Nh: 5000 })[0][1], 0.25);
+
+
+// ابزارهای افزوده‌شده از تصاویر (۱۲۹ تا ۱۴۴)
+{
+  let n=0;
+  for(let t=129;t<=150;t++){ const c=CALCS[t]; if(!c||!c.x||!c.name) throw new Error('missing added calculator '+t); const o=c.c(parseDefaults(c.f('ac3')),'ac3'); if(!o.r||!o.r.length) throw new Error('empty added calculator '+t); o.r.forEach(x=>{if(typeof x[1]==='number'&&!isFinite(x[1])) throw new Error('nonfinite added calculator '+t);}); n++; }
+  if(n!==22) throw new Error('added calculator count mismatch');
+  eq(run(129,'ac3',{d1:1,d2:0,d3:0,m:2,bands:'4',tol:'5'})[0][1],1000);
+  eq(run(130,'ac3',{code:472,digits:'3'})[0][1],4700);
+  eq(run(131,'ac3',{code:104,tol:10})[0][1],100000);
+  eq(run(132,'dc',{Vs:12,Vf:2,n:3,I:20,branches:1})[0][1],300);
+  eq(run(133,'dc',{Ah:100,V:12,P:60,eta:90,dod:80})[1][1],14.4);
+  eq(run(135,'ac3',{cams:8,bitrate:4,days:30,hours:24,over:0})[0][1],32);
+  eq(run(137,'ac3',{sig:'ma',meas:12,lo:0,hi:100,min:4,max:20})[1][1],50);
+  eq(run(141,'ac3',{Qn:25,Vn:440,V:400,f:50,f2:50})[0][1],25*Math.pow(400/440,2));
+  console.log('۲۲ ابزار تکمیلی و مقادیر مرجع: OK');
+}
+
+eq(run(145,'dc',{It:10,R1:10,R2:20})[0][1],10*2/3);
+eq(run(147,'dc',{Vs:24,Vload:12,I:0.5})[1][1],24);
+
+eq(run(149,'ac1',{U:230,Zs:0.2,rho:0.01724,A:2.5,L:50,Ia:80})[1][1],230/(0.2+2*0.01724*50/2.5));
