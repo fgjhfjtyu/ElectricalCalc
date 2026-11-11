@@ -97,7 +97,7 @@
   /* ---------- صفحه اصلی ---------- */
   function home() {
     app.innerHTML =
-      '<header><h1>فرمول‌های برق صنعتی</h1><div class="sub">۲۰۵۰ عنوان مرجع · ۴۱ موضوع · ' + fa(BASE_GROUPS.length) + ' خانواده فرمول پایه یکپارچه · ۶۴ محاسبه‌گر تخصصی یکتا · کاملاً آفلاین</div>' +
+      '<header><h1>فرمول‌های برق صنعتی</h1><div class="sub">۲۰۵۰ عنوان مرجع · ۴۱ موضوع · ' + fa(BASE_GROUPS.length) + ' خانواده فرمول پایه یکپارچه · ۸۶ محاسبه‌گر تخصصی یکتا · کاملاً آفلاین</div>' +
       '<input id="q" type="search" placeholder="جستجو: نام فرمول، موضوع یا شماره عنوان مرجع" value="' + esc(query) + '">' +
       '<div class="tabs"><button class="tab" data-t="cats">موضوع‌ها</button><button class="tab" data-t="base">فرمول‌های یکپارچه</button></div></header>' +
       '<div id="res"></div>';
