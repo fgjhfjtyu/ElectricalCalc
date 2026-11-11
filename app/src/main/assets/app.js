@@ -81,6 +81,16 @@
     res.innerHTML = h;
   }
 
+  function spLinks(i) {
+    var ids = (window.SP_MAP || {})[i]; if (!ids) return '';
+    return '<div class="card"><b>ماشین‌حساب‌های تخصصی این موضوع</b><div class="list">' + ids.map(function (id) {
+      return '<a class="item" href="#/sp/' + id + '/' + i + '"><span class="num">★</span><span>' + esc(C[id].name) + '</span></a>'; }).join('') + '</div></div>';
+  }
+  function sp(id, ci) {
+    if (!C[id]) return home();
+    calcPage(id, 'ac3', '<h1>' + esc(C[id].name) + '</h1>', '', '#/cat/' + ci);
+  }
+
   /* ---------- فهرست یک موضوع ---------- */
   function cat(i) {
     var c = D.cats[i];
@@ -89,7 +99,7 @@
     var st = [0, 0, 0]; list.forEach(function (e) { st[e[3]]++; });
     app.innerHTML = '<header><a class="back" href="#/">‹ بازگشت</a><h1>' + esc(c.n) + '</h1>' +
       '<div class="stats"><span>● مرتبط ' + fa(st[2]) + '</span><span>● عمومی ' + fa(st[1]) + '</span><span>● نامرتبط ' + fa(st[0]) + '</span></div></header>' +
-      '<div class="list">' + list.map(itemHtml).join('') + '</div>';
+      spLinks(i) + '<div class="list">' + list.map(itemHtml).join('') + '</div>';
     window.scrollTo(0, 0);
   }
 
@@ -142,6 +152,7 @@
         out.innerHTML = '<div class="err">' + esc(e.message.replace(/«(\w+)»/, function (m, k) { return '«' + (labels[k] || k) + '»'; })) + '</div>';
       }
     }
+    if (calc.x) seg.style.display = 'none';
     drawSeg(); drawForm(); compute();
     window.scrollTo(0, 0);
   }
@@ -150,6 +161,7 @@
     var e = BYNUM[n];
     if (!e) return home();
     var badge = '<div class="badge b' + e[3] + '"><b>' + ST_NAME[e[3]] + ':</b> ' + ST_TXT[e[3]] + '</div>';
+    if (e[3] === 1) badge += spLinks(e[2]);
     calcPage(e[1], D.cats[e[2]].s, '<div class="sub">شماره ' + fa(e[0]) + ' · فرمول پایه ' + fa(e[1]) + '</div><h1>' + esc(title(e)) + '</h1>', badge, '#/cat/' + e[2]);
   }
   function base(t) {
@@ -161,6 +173,7 @@
     var h = location.hash.replace(/^#\/?/, '').split('/');
     if (h[0] === 'cat') return cat(parseInt(h[1], 10));
     if (h[0] === 'e') return entry(parseInt(h[1], 10));
+    if (h[0] === 'sp') return sp(parseInt(h[1], 10), parseInt(h[2], 10));
     if (h[0] === 'base') return base(parseInt(h[1], 10));
     home();
   }

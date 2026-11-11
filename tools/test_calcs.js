@@ -50,3 +50,6 @@ DATA.ents.forEach(([n, t, ci]) => {
   catch (e) { fails++; console.log('ENTRY FAIL', n, t, s, e.message); }
 });
 console.log('entries computing with default values:', entries, '/', DATA.ents.length, 'fails:', fails);
+
+// ماشین‌حساب‌های تخصصی ۵۱ تا ۶۲
+{ let b = 0; for (let t = 51; t <= 62; t++) { const C = CALCS[t]; try { const o = C.c(parseDefaults(C.f('ac3')), 'ac3'); o.r.forEach(x => { if (typeof x[1] === 'number' && !isFinite(x[1])) throw new Error('nonfinite'); }); } catch (e) { b++; console.log('SP ERR', t, e.message); } } console.log('تخصصی خطا:', b); }
